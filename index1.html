@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>39 Meses de Amor ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(#ffe6f0, #fff);
+  text-align: center;
+  overflow: hidden;
+  transition: background 1.5s ease;
+}
+
+/* 🖼️ PANTALLA INICIAL COMPLETA */
+#startScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("1.jpeg") center/cover no-repeat;
+  z-index: 10;
+  display: none;
+}
+
+/* Título */
+h1 {
+  color: #c2185b;
+  margin-top: 20px;
+  z-index: 5;
+  position: relative;
+}
+
+/* ❤️ Corazones inicio */
+.start-heart {
+  position: absolute;
+  font-size: 42px;
+  cursor: pointer;
+  animation: float 4s ease-in-out infinite;
+  z-index: 20;
+}
+
+#realHeart {
+  font-size: 60px;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+/* 🌧️ Lluvia de corazones */
+.heart {
+  position: fixed;
+  top: -50px;
+  font-size: 30px;
+  animation: fall linear infinite;
+  z-index: 1;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+/* 🖼️ Carrusel */
+#content {
+  display: none;
+  position: relative;
+  z-index: 2;
+}
+
+.carousel {
+  width: 90%;
+  max-width: 320px;
+  height: 420px;
+  margin: 30px auto;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.carousel img.active {
+  display: block;
+}
+
+/* 💌 Mensaje */
+#message {
+  font-size: 20px;
+  color: #c2185b;
+  font-weight: bold;
+  padding: 20px;
+}
+
+@media (max-width: 480px) {
+  .carousel {
+    height: 360px;
+  }
+
+  #message {
+    font-size: 18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="title">💖 Encuentra el corazón verdadero 💖</h1>
+
+<!-- 🖼️ Pantalla inicio -->
+<div id="startScreen"></div>
+
+<!-- ❤️ Corazones -->
+<div id="heartsContainer"></div>
+
+<!-- 💕 Contenido final -->
+<div id="content">
+
+  <div class="carousel">
+    <img src="foto10.jpeg" class="active">
+    <img src="foto2.jpeg">
+    <img src="foto3.jpeg">
+    <img src="foto4.jpeg">
+    <img src="foto5.jpeg">
+    <img src="foto6.jpeg">
+    <img src="foto7.jpeg">
+    <img src="foto8.jpeg">
+    <img src="foto9.jpeg">
+  </div>
+
+  <div id="message">
+    🌹 Feliz 39 meses llenos de amor y aventuras juntos 🌹<br>
+    Gracias por existir en mi vida ❤️
+  </div>
+
+</div>
+
+<script>
+const heartsContainer = document.getElementById("heartsContainer");
+const title = document.getElementById("title");
+const startScreen = document.getElementById("startScreen");
+const content = document.getElementById("content");
+
+// 🎨 Fondos pastel
+const pastelBackgrounds = [
+  "linear-gradient(135deg, #ffe6f0, #fff)",
+  "linear-gradient(135deg, #e0f7fa, #fff)",
+  "linear-gradient(135deg, #f3e5f5, #fff)",
+  "linear-gradient(135deg, #fff3e0, #fff)",
+  "linear-gradient(135deg, #e8f5e9, #fff)"
+];
+
+// ❤️ Corazones falsos
+for (let i = 0; i < 12; i++) {
+  const heart = document.createElement("div");
+  heart.className = "start-heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 90 + "vw";
+  heart.style.top = Math.random() * 70 + "vh";
+  heart.onclick = () => heart.remove();
+  heartsContainer.appendChild(heart);
+}
+
+// 💖 Corazón real
+const realHeart = document.createElement("div");
+realHeart.id = "realHeart";
+realHeart.className = "start-heart";
+realHeart.innerHTML = "❤️";
+realHeart.style.left = "45vw";
+realHeart.style.top = "55vh";
+
+realHeart.onclick = () => {
+  heartsContainer.innerHTML = "";
+  title.style.display = "none";
+  startScreen.style.display = "block";
+
+  setTimeout(() => {
+    startScreen.style.display = "none";
+    content.style.display = "block";
+    startHearts();
+  }, 2500);
+};
+
+heartsContainer.appendChild(realHeart);
+
+// 🌧️ Lluvia de corazones
+function startHearts() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 250);
+}
+
+// 🖼️ Carrusel + fondo
+let index = 0;
+const images = document.querySelectorAll(".carousel img");
+
+setInterval(() => {
+  images[index].classList.remove("active");
+  index = (index + 1) % images.length;
+  images[index].classList.add("active");
+
+  document.body.style.background =
+    pastelBackgrounds[Math.floor(Math.random() * pastelBackgrounds.length)];
+}, 2500);
+</script>
+
+</body>
+</html>
